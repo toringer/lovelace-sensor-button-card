@@ -41,16 +41,12 @@ export class SensorButtonCard extends LitElement {
 
   public setConfig(config: SensorButtonCardConfig): void {
     // TODO Check for required fields and that they are of the proper format
-    if (!config || config.show_error) {
+    if (!config) {
       throw new Error(localize('common.invalid_configuration'));
     }
 
-    if (config.test_gui) {
-      getLovelace().setEditMode(true);
-    }
-
     this._config = {
-      name: 'SensorButton',
+      name: 'Sensor Button',
       ...config,
     };
   }
@@ -64,18 +60,11 @@ export class SensorButtonCard extends LitElement {
       return html``;
     }
 
-    // TODO Check for stateObj or other necessary things and render a warning if missing
-    if (this._config.show_warning) {
-      return html`
-        <ha-card>
-          <div class="warning">${localize('common.show_warning')}</div>
-        </ha-card>
-      `;
-    }
+    const stateObj = this.hass.states[this._config.entity];
+    console.log('*** stateobj', stateObj);
 
     return html`
       <ha-card
-        .header=${this._config.name}
         @action=${this._handleAction}
         .actionHandler=${actionHandler({
           hasHold: hasAction(this._config.hold_action),
@@ -84,23 +73,41 @@ export class SensorButtonCard extends LitElement {
         })}
         tabindex="0"
         aria-label=${`SensorButton: ${this._config.entity}`}
-      ></ha-card>
+        class="card"
+      >
+        <div class="name">
+          ${this._config.name}
+        </div>
+        <div class="sensor">
+          <div class="sensor-value">${stateObj.state}</div>
+          <div class="sensor-unit">${stateObj.attributes.unit_of_measurement}</div>
+        </div>
+      </ha-card>
     `;
   }
 
   private _handleAction(ev: ActionHandlerEvent): void {
     if (this.hass && this._config && ev.detail.action) {
-      handleAction(this, this.hass, this._config, ev.detail.action);
+      // handleAction(this, this.hass, this._config, ev.detail.action);
     }
   }
 
   static get styles(): CSSResult {
     return css`
-      .warning {
-        display: block;
-        color: black;
-        background-color: #fce588;
-        padding: 8px;
+      .card {
+        padding: 16px;
+      }
+      .name {
+        margin-bottom: 4px;
+      }
+      .sensor {
+      }
+      .sensor-value {
+        font-size: 2rem;
+        display: inline;
+      }
+      .sensor-unit {
+        display: inline;
       }
     `;
   }

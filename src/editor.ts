@@ -72,7 +72,7 @@ export class SensorButtonCardEditor extends LitElement implements LovelaceCardEd
 
   get _show_warning(): boolean {
     if (this._config) {
-      return this._config.show_warning || false;
+      return false;
     }
 
     return false;
@@ -80,7 +80,7 @@ export class SensorButtonCardEditor extends LitElement implements LovelaceCardEd
 
   get _show_error(): boolean {
     if (this._config) {
-      return this._config.show_error || false;
+      return false;
     }
 
     return false;
