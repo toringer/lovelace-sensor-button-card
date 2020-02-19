@@ -61,7 +61,6 @@ export class SensorButtonCard extends LitElement {
     }
 
     const stateObj = this.hass.states[this._config.entity];
-    console.log('*** stateobj', stateObj);
 
     return html`
       <ha-card

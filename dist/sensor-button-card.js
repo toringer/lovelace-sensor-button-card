@@ -3412,7 +3412,6 @@ let SensorButtonCard = class SensorButtonCard extends LitElement {
             return html ``;
         }
         const stateObj = this.hass.states[this._config.entity];
-        console.log('*** stateobj', stateObj);
         return html `
       <ha-card
         @action=${this._handleAction}
