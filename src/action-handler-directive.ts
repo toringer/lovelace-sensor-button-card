@@ -164,7 +164,6 @@ class ActionHandler extends HTMLElement implements ActionHandler {
   }
 }
 
-
 customElements.define('action-handler-sensor-button', ActionHandler);
 
 const getActionHandler = (): ActionHandler => {

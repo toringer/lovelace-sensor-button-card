@@ -87,7 +87,7 @@ export class SensorButtonCard extends LitElement {
 
   private _handleAction(ev: ActionHandlerEvent): void {
     if (this.hass && this._config && ev.detail.action) {
-      // handleAction(this, this.hass, this._config, ev.detail.action);
+      //handleAction(this, this.hass, this._config, ev.detail.action);
     }
   }
 
