@@ -8,4 +8,12 @@ export interface SensorButtonCardConfig {
   tap_action?: ActionConfig;
   hold_action?: ActionConfig;
   double_tap_action?: ActionConfig;
+  precision: number;
+  below?: Limit;
+  above?: Limit;
+}
+
+export interface Limit {
+  limit: number;
+  color: string;
 }

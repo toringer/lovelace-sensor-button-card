@@ -47,6 +47,7 @@ export class SensorButtonCard extends LitElement {
 
     this._config = {
       name: 'Sensor Button',
+      precision: 2,
       ...config,
     };
   }
@@ -77,12 +78,29 @@ export class SensorButtonCard extends LitElement {
         <div class="name">
           ${this._config.name}
         </div>
-        <div class="sensor">
-          <div class="sensor-value">${stateObj.state}</div>
+        <div class="sensor" style="color:${this.getSensorColor(stateObj.state)}">
+          <div class="sensor-value">${this.getState(stateObj.state)}</div>
           <div class="sensor-unit">${stateObj.attributes.unit_of_measurement}</div>
         </div>
       </ha-card>
     `;
+  }
+
+  private getSensorColor(state: string): string {
+    if (this._config?.below !== undefined && parseFloat(state) < this._config?.below.limit) {
+      return this._config?.below.color;
+    }
+
+    if (this._config?.above !== undefined && parseFloat(state) > this._config?.above.limit) {
+      return this._config?.above.color;
+    }
+
+    return 'inheret';
+  }
+
+  private getState(state: string): string {
+    const value = parseFloat(state);
+    return value.toFixed(this._config?.precision);
   }
 
   private _handleAction(ev: ActionHandlerEvent): void {
@@ -98,6 +116,7 @@ export class SensorButtonCard extends LitElement {
       }
       .name {
         margin-bottom: 4px;
+        color: gray;
       }
       .sensor {
       }
